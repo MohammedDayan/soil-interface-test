@@ -30,7 +30,7 @@ const ManualPage = () => {
         - Patm(Pa): Enter the value for Pₐₜₘ in Pascal (Pa).
         - Thickness(m): Enter the value for t in meters (m).
       </p>
-      <p className="mb-4">Once all parameters are entered, click the 'Submit' button to proceed with the calculation.</p>
+      <p className="mb-4">Once all parameters are entered, click the Submit button to proceed with the calculation.</p>
     </div>
     </div>
   );

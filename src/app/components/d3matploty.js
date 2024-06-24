@@ -7,9 +7,9 @@ const LineGraph = ({ data, xLabel, yLabel, lineColor, legend }) => {
   useEffect(() => {
     if (!data) return;
 
-    const margin = { top: 40, right: 30, bottom: 50, left: 75 };
+    const margin = { top: 40, right: 30, bottom: 60, left: 75 };
     const boxWidth = 500;
-    const boxHeight = 250;
+    const boxHeight = 400;
     const width = boxWidth - margin.left - margin.right;
     const height = boxHeight - margin.top - margin.bottom;
 
@@ -40,16 +40,20 @@ const LineGraph = ({ data, xLabel, yLabel, lineColor, legend }) => {
       .call(d3.axisBottom(x).ticks(5).tickSizeOuter(0))
       .selectAll('text')
       .style('text-anchor', 'end')
-      .attr('transform', 'rotate(-45)');
+      .attr('transform', 'rotate(0)')
+      .style('font-size', '18px');  // Increase font size here
 
     // Create the y-axis
     g.append('g')
-      .call(d3.axisLeft(y).ticks(5).tickSizeOuter(0));
+      .call(d3.axisLeft(y).ticks(5).tickSizeOuter(0))
+      .selectAll('text')
+      .style('font-size', '18px');  // Increase font size here
 
     // Add x-axis label
     g.append('text')
       .attr('transform', `translate(${width / 2},${height + margin.top + 10})`)
       .style('text-anchor', 'middle')
+      .style('font-size', '18px')
       .text(xLabel);
 
     // Add y-axis label
@@ -59,6 +63,7 @@ const LineGraph = ({ data, xLabel, yLabel, lineColor, legend }) => {
       .attr('x', 0 - (height / 2))
       .attr('dy', '1em')
       .style('text-anchor', 'middle')
+      .style('font-size', '18px')
       .text(yLabel);
 
     const line = d3.line()
@@ -71,7 +76,7 @@ const LineGraph = ({ data, xLabel, yLabel, lineColor, legend }) => {
       .attr('d', line)
       .attr('fill', 'none')
       .attr('stroke', lineColor)
-      .attr('stroke-width', 2);
+      .attr('stroke-width', 1.5);
 
     // Add legend
     if (legend) {
@@ -88,7 +93,7 @@ const LineGraph = ({ data, xLabel, yLabel, lineColor, legend }) => {
     }
   }, [data, xLabel, yLabel, lineColor, legend]);
   return (
-    <svg ref={svgRef} style={{ width: '500px', height: '250px' }}></svg>
+    <svg ref={svgRef} style={{ width: 'auto', height: 'auto' , backgroundColor:'white' ,fontFamily:'arial',fontWeight:'normal' }}></svg>
   );
 };
 

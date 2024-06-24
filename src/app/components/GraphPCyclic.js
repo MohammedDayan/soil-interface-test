@@ -4,17 +4,18 @@ import LineGraph from './d3load';
 import * as XLSX from 'xlsx';
 import GoogleLineGraph from './googleLineGraph';
 
-const GraphPage = ({ key }) => {
+const GraphPage = ({ reloadCyclicG, onReset }) => {
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
 
-  useEffect(() => {
+
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/get_cyclic_graph');
+        // const response = await fetch('http://127.0.0.1:5000/get_cyclic_graph');
+        const response = await fetch('http://127.0.0.1:5000/get_text_file');
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
@@ -43,17 +44,22 @@ const GraphPage = ({ key }) => {
 
       } catch (error) {
         console.error('Error fetching data:', error);
+      }finally{
+        
+        onReset();
       }
+
+
     };
 
-    fetchData();
-    
-  
-    
-    
-  }, [key]);
 
-  
+
+  useEffect(() => {
+    if (reloadCyclicG) {
+      fetchData();
+    }
+  }, [reloadCyclicG]);
+
   const handleDownloadExcel = () => {
     const dataToExport = [
       ['Normal Displacement (m)', 'Tangential Displacement (m)', 'Normal Stress (Pa)', 'Shear Stress (Pa)'],

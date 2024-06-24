@@ -8,13 +8,16 @@ import {Transition} from "@headlessui/react";
 import GraphIllustration from "../components/GraphIllustration";
 import Header from '../components/loggedmenu';
 import LineGraph from '../components/d3matploty';
+import LineGraph2 from '../components/cylic2ndplot';
+import BottomGraph from '../components/buttoncyclicplot';
+import * as XLSX from 'xlsx';
 import {Progress} from "@nextui-org/progress";
 import ProgressBar from '@ramonak/react-progress-bar';
 import GraphIllustrationloadinginput from '../components/GraphIllustrationloadinginput';
 import GraphIllustrationinitialinput from '../components/GraphIllustrationinitialinput';
 import PlotComponent from '../components/newplot';
 import io from 'socket.io-client';
-
+import { BounceLoader } from 'react-spinners';
 const socket = io('http://127.0.0.1:5000/');
 
 interface ShearTest {
@@ -60,6 +63,10 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
     const [data, setData] = useState<DataPoint[]>([]);
     const [data2, setData2] = useState<DataPoint[]>([]);
     const [data3, setData3] = useState<DataPoint[]>([]);
+
+    const [datac, setDatac] = useState<DataPoint[]>([]);
+    const [datac2, setDatac2] = useState<DataPoint[]>([]);
+    const [datac3, setDatac3] = useState<DataPoint[]>([]);
     const [reloadCyclicG, setReloadCyclic] = useState(false);
     const [progress, setProgress] = useState(0); // Progress state
     // Define a default value for currentGraph
@@ -67,6 +74,12 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
     const form1Ref = useRef<HTMLFormElement>(null);
     const form2Ref = useRef<HTMLFormElement>(null);
     const form3Ref = useRef<HTMLFormElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    // Use useEffect to trigger animation when component mounts
+    useEffect(() => {
+      setIsVisible(true);
+    }, []);
     
     // Retrieve the value from local storage or use the default value
     const getStoredValue = () => {
@@ -108,6 +121,10 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
         if (form3Ref.current) form3Ref.current.requestSubmit();
     };
 
+    const resetReloadCyclicG = () => {
+       
+        setReloadCyclic(false);
+      };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -190,14 +207,15 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
     
     const fetchData = async () => {
         try {
+           
             const response = await fetch('http://127.0.0.1:5000/get_text_file');
-            // const response = await fetch('http://127.0.0.1:5000/get_cyclic_graph');
-            if (!response.ok) {
+            const response2 = await fetch('http://127.0.0.1:5000/get_cyclic_graph');
+            if (!response.ok || !response2.ok) {
                 throw new Error('Failed to fetch data');
             }
             const rawData = await response.text();
-            console.log("raw data from the server ..... ")
-            console.log(rawData)
+            const rawData2 = await response2.text();
+            
 
             const rows = rawData.trim().split('\n').map(row => row.split(/\s+/));
             const rearrangedData: DataPoint[] = rows.slice(1).map(row => ({
@@ -212,32 +230,30 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
                 x: parseFloat(row[3]),
                 y: parseFloat(row[4])
             }));
+            // data rearrangement for cylic
+            const rowsc = rawData2.trim().split('\n').map(row => row.split(/\s+/));
+            const rearrangedDatac: DataPoint[] = rowsc.slice(1).map(row => ({
+                x: parseFloat(row[2]),
+                y: parseFloat(row[1])
+            }));
+            const rearrangedDatac2: DataPoint[] = rowsc.slice(1).map(row => ({
+                x: parseFloat(row[2]),
+                y: parseFloat(row[4])
+            }));
+            const rearrangedDatac3: DataPoint[] = rowsc.slice(1).map(row => ({
+                x: parseFloat(row[3]),
+                y: parseFloat(row[4])
+            }));
 
 
-            // setData(rearrangedData);
-            // setData3(rearrangedData3);
-            // setData2(rearrangedData2);
 
-            // const selectDataPoints = (data: DataPoint[]): DataPoint[] => {
-            //     const selectedData: DataPoint[] = [];
-            //     for (let i = 0; i < data.length; i += 4) {
-            //         selectedData.push(data[i]);
-            //     }
-            //     return selectedData;
-            // };
+            setDatac(rearrangedDatac);
+            setDatac2(rearrangedDatac2);
+            setDatac3(rearrangedDatac3);
 
-            // const selectedData = selectDataPoints(rearrangedData);
-            // const selectedData2 = selectDataPoints(rearrangedData2);
-            // const selectedData3 = selectDataPoints(rearrangedData3);
-
-  
-            // setData(selectedData);
-            // setData2(selectedData2);
-            // setData3(selectedData3);
-              setData(rearrangedData);
+            setData(rearrangedData);
             setData2(rearrangedData2);
             setData3(rearrangedData3);
-
 
             setLoading(false);
 
@@ -245,10 +261,9 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
             setShowGraph1(currentGraph);
             
 
-            setTimeout(() => {
-                setReloadCyclic(prevState => !prevState);
-                
-            }, 1000);
+            
+                            
+         
 
 
         } catch (error) {
@@ -292,7 +307,51 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
     //         }
     //     };
     // }, [loading]);
+    const handleDownloadExcel = () => {
+        const dataToExport = [
+          ['Normal Displacement (m)', 'Tangential Displacement (m)', 'Normal Stress (Pa)', 'Shear Stress (Pa)'],
+          ...data.map((item, index) => [item.y, item.x, data3[index].x, data3[index].y])
+        ];
+    
+        const workbook = XLSX.utils.book_new();
+        const worksheet1 = XLSX.utils.aoa_to_sheet(dataToExport);
+        XLSX.utils.book_append_sheet(workbook, worksheet1, 'Data');
+    
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+    
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'data.xlsx';
+        a.click();
+    
+        URL.revokeObjectURL(url);
+      };
 
+      // cyclic download button
+
+      const handleDownloadCylic = () => {
+        const dataToExport = [
+          ['Normal Displacement (m)', 'Tangential Displacement (m)', 'Normal Stress (Pa)', 'Shear Stress (Pa)'],
+          ...data2.map((item, index) => [item.y, item.x, datac3[index].x, datac3[index].y])
+        ];
+    
+        const workbook = XLSX.utils.book_new();
+        const worksheet1 = XLSX.utils.aoa_to_sheet(dataToExport);
+        XLSX.utils.book_append_sheet(workbook, worksheet1, 'Data');
+    
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+    
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'data.xlsx';
+        a.click();
+    
+        URL.revokeObjectURL(url);
+      };
     return (
         <>
             <Header></Header>
@@ -478,34 +537,35 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
                         </div>
                     </div>
                     {/* Main Page */}
-                    <div className="flex-1 white p-4">
+                    <div className="flex-1 bg-white p-4">
                         {/* Content from Page */}
                         <div>
 
                             {graphPage ? 
                                 (
                                     <>
-
+                                        <div className='bg-white'>
                                         <div>
                                             {/* Conditional rendering based on the value of 'loading' */}
-                                            {loading ? (
+                                            {/* old progress bar */}
+                                            {/* {loading ? (
                                                 <div className="block">
                                                     loading....
-                                                    {/* <ProgressBar
+                                                    <ProgressBar
                                                         completed={progress}
                                                         transitionDuration="0s"
                                                         animateOnRender={false}
-                                                    /> */}
+                                                    />
                                                 </div>
                                             ) : (
                                                 <div className="hidden">
-                                                    {/* <ProgressBar
+                                                    <ProgressBar
                                                         completed={progress}
                                                         transitionDuration="0s"
                                                         animateOnRender={false}
-                                                    /> */}
+                                                    />
                                                 </div>
-                                            )}
+                                            )} */}
                                         </div>
                                         <div className="">
                                             {/* Static button */}
@@ -518,7 +578,7 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
                                                 className={`bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline ${showGraph1 ? "bg-blue-700" : "bg-gray-700"}`}
                                                 disabled={showGraph1}
                                             >
-                                                Static
+                                               Static
                                             </button>
                                             {/* Cyclic button */}
                                             <button
@@ -543,37 +603,110 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
 
                                             {showGraph1 ? (
                                                     //   <GraphPageStatic key={reloadTransition.toString() }  ></GraphPageStatic>
-                                                    <div>
-
-                                                        <div className="flex flex-col">
+                                                    <div style={{  backgroundColor:'white' }}>
+                                                         <div className={`transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                                                         <div className="transition-opacity duration-1000 opacity-100">
+                                                        <div className="flex flex-col" style={{  backgroundColor:'white' }}>
                                                             <div className="flex justify-between mb-4">
-                                                                <div className="w-1/2 bg-gray-200 p-4">
-                                                                    <p className="text-center">Tangential Displacement(m)
-                                                                        against Normal Displacement (m)</p>
-                                                                    <LineGraph data={data} xLabel={"Normal Displacement (m)"}
-                                                                               yLabel={"Tangential Displacement(m)"}/>
+                                                                <div className="w-1/2 bg-white p-4">
+                                                                   
+                                                                                  
+                                                                <LineGraph data={data2} xLabel={"Tangential Displacement (mm)"}
+                                                                               yLabel={"Shear Stress (kPa)"}/>
                                                                 </div>
-                                                                <div className="w-1/2 bg-gray-200 p-4">
-                                                                    <p className="text-center">Normal Stress (Pa) against Shear
-                                                                        Stress (Pa)</p>
-                                                                    <LineGraph data={data2} xLabel={"Shear Stress (Pa)"}
-                                                                               yLabel={"Normal Stress (Pa)"}/>
+                                                                <div className="w-1/2 bg-white p-4">
+                                                                     
+                                                                    <LineGraph2 data={data} xLabel={"Tangential Displacement (mm)"}
+                                                                               yLabel={"Normal Displacement (mm)"}/>
                                                                 </div>
                                                             </div>
                                                             <div className="flex justify-center">
-                                                                <div className="bg-gray-200 p-4">
-                                                                    <p className="text-center">Normal Stress (Pa) against Shear
-                                                                        Stress (Pa)</p>
-                                                                    <LineGraph data={data3} yLabel={"Normal Stress (Pa)"}
-                                                                               xLabel={"Shear Stress (Pa)"}/>
+                                                                <div className="bg-white p-4">
+                                                                   
+                                                                               <LineGraph data={data3} yLabel={"Shear Stress (kPa)"}
+                                                                               xLabel={"Normal Stress (kPa)"}/>
+                                                                    
                                                                 </div>
                                                             </div>
+                                                            <div className="flex justify-center mt-4">
+                                                            <button onClick={handleDownloadExcel} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                            Download Excel
+                                                            </button>
                                                         </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
                                                     </div>
                                                 ) :
                                                 <>
-                                                    <GraphPage  key={reloadCyclicG.toString()} ></GraphPage>
-                                                    {/* <GraphPageStatic  ></GraphPageStatic> */}
+                                                   {/* cylic graph */}
+                                                   {loading? (
+                                                            <>
+                                                            <div style={{display:'block',}}>
+
+                                                            
+                                                            <div className="flex justify-center items-center h-screen" style={{
+                                                            position: 'absolute',
+                                                            top: '50%',
+                                                            left: '70%',
+                                                            transform: 'translate(-50%, -50%)'
+                                                            }}>
+                                                            <BounceLoader size="250" color="#4C49EB" />
+                                                            
+                                                            
+                                                            </div>
+                                                            <div style={{  fontSize:30, fontWeight:'bold', float:'right'}} >
+                                                                Loading....
+                                                            </div>
+
+                                                            </div>
+                                                            </>
+                                                        ):
+
+                                                        
+                                                        <>
+                                                        <div style={{  backgroundColor:'white' }}>
+
+                                                        
+
+<div className="flex flex-col" style={{  backgroundColor:'white' }}>
+
+   
+
+    <div className="flex justify-between mb-4">
+        <div className="w-1/2 bg-white p-4">
+           
+                          
+        <LineGraph data={datac2} xLabel={"Tangential Displacement (mm)"}
+                       yLabel={"Shear Stress (kPa)"}/>
+        </div>
+        <div className="w-1/2 bg-white p-4">
+             
+            <LineGraph2 data={datac} xLabel={"Tangential Displacement (mm)"}
+                       yLabel={"Normal Displacement (mm)"}/>
+        </div>
+    </div>
+    <div className="flex justify-center">
+        <div className="bg-white p-4">
+           
+                       <BottomGraph data={datac3} yLabel={"Shear Stress (kPa)"}
+                       xLabel={"Normal Stress (kPa)"}/>
+            
+        </div>
+    </div>
+    <div className="flex justify-center mt-4">
+    <button onClick={handleDownloadExcel} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    Download Excel
+    </button>
+</div>
+</div>
+</div>
+                                                        </>
+                                                        
+                                                        }  
+
+                                                    
+
                                                 </>
                                                 
 
@@ -586,15 +719,15 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
 
                                             {/* </Transition> */}
                                         </div>
-
+                                    </div>      
                                     </>
                                 )
                                 :
 
                                 (
                                     <>
-                                     <div>
-                                                        {/* Conditional rendering based on the value of 'loading' */}
+                                        {/* <div>
+                                                        
                                                         {loading ? (
                                                             <div className="block">
                                                                 <ProgressBar
@@ -609,7 +742,7 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
                                                             
                                                         </div>
                                                         )}
-                                                    </div>
+                                         </div> */}
                                         <div>
 
                                             {activeTab === 'tab1' &&

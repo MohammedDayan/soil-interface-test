@@ -71,7 +71,7 @@ const IndexPage = () => {
        Understanding the behavior of soil-structure interfaces is crucial for designing stable structures. Our platform integrates advanced technology to accurately predict these interactions under static and dynamic loads.
        Using cutting-edge two-surface plasticity models, we capture complex behaviors like dilation and strain softening. Our solution provides reliable predictions across various densities and stress levels.
       With our intuitive interface and powerful capabilities, engineers can confidently optimize their designs for superior performance.
-       Experience the future of soil-structure interaction analysis with us. Let's redefine possibilities in geo-engineering together.
+       Experience the future of soil-structure interaction analysis with us. Lets redefine possibilities in geo-engineering together.
        </h2> 
         </div>
         </div>
@@ -84,7 +84,7 @@ const IndexPage = () => {
         <div >
           <h2 className="text-lg font-semibold mb-2">Interface Shear Testing</h2>
           <p>Some description here...  </p>
-          <img src="images/sheartest.jpg" className="w-24 h-24 mr-4 rounded-full" alt="Illustration" />    
+          <Image width={500} height={300} src="/images/sheartest.jpg" className="w-24 h-24 mr-4 rounded-full" alt="Illustration" />    
           <p className="mb-2"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non impedit esse alias dicta neque sit facere ipsum iste, quibusdam dolores a repellendus accusantium, beatae cum temporibus similique nulla atque ipsa!</p>
           <a href="/ShearTest" className="text-blue-600 mt-2 block border border-blue-600 rounded-md px-4 py-2 inline-flex items-center">
             Get Started
@@ -100,7 +100,7 @@ const IndexPage = () => {
           <div className="bg-gray-100 p-4 rounded-lg">
             <h2 className="text-lg font-semibold mb-2">Bearing Pipeline</h2>
             <p>Some description here...</p>
-            <img src="images/bearing.png" className="w-24 h-24 mr-4 rounded-full" alt="Illustration" />    
+            <Image width={500} height={300}src="/images/bearing.png" className="w-24 h-24 mr-4 rounded-full" alt="Illustration" />    
 
             <p className=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non impedit esse alias dicta neque sit facere ipsum iste, quibusdam dolores a repellendus accusantium, beatae cum temporibus similique nulla atque ipsa!
             </p>
@@ -117,7 +117,7 @@ const IndexPage = () => {
           <div className="bg-gray-100 p-4 rounded-lg" id="soil-section">
             <h2 className="text-lg font-semibold mb-2">Soil Pile Interaction</h2>
             <p>Some description here...</p>
-            <img src="images/pile.jpg" className="w-24 h-24 mr-4 rounded-full" alt="Illustration" />    
+            <Image width={500} height={300}src="/images/pile.jpg" className="w-24 h-24 mr-4 rounded-full" alt="Illustration" />    
 
             <p className=""> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non impedit esse alias dicta neque sit facere ipsum iste, quibusdam dolores a repellendus accusantium, beatae cum temporibus similique nulla atque ipsa!</p>
 
