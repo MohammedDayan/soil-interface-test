@@ -569,7 +569,7 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
                                         </div>
                                         <div className="">
                                             {/* Static button */}
-                                            <button
+                                            <button  style={{fontSize:24, marginRight:10,}}
                                                 onClick={() => {
                                                     setShowGraph1(true);
                                                     setCurrentGraph(true)
@@ -578,10 +578,11 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
                                                 className={`bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline ${showGraph1 ? "bg-blue-700" : "bg-gray-700"}`}
                                                 disabled={showGraph1}
                                             >
-                                               Static
+                                               Monotonic
                                             </button>
+
                                             {/* Cyclic button */}
-                                            <button
+                                            <button style={{fontSize:24,}}
                                                 onClick={() => {
 
 
@@ -589,7 +590,7 @@ const ShearTest: React.FC<ShearTest> = ({Load}) => {
                                                     setCurrentGraph(false);
 
                                                 }}
-                                                className={`ml-2 bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline ${!showGraph1 ? "bg-blue-700" : "bg-gray-700"}`}
+                                                className={`l-2 bg-blue-500 text-l hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline ${!showGraph1 ? "bg-blue-700" : "bg-gray-700"}`}
                                                 disabled={!showGraph1}
                                             >
                                                 Cyclic
