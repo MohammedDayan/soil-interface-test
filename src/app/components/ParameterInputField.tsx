@@ -15,14 +15,14 @@ interface ParameterInputFieldProps {
 const ParameterInputField: React.FC<ParameterInputFieldProps> = ({ label, id, name, icon, type, required,value, onChange }) => {
   return (
     <div className="mb-4">
-      <label htmlFor={id} className="block text-sm font-medium text-white">
+      <label htmlFor={id} style={{fontSize:16}} className="block text-sm font-bold text-white">
         {label}
       </label>
-      <div className="mt-1 relative rounded-md shadow-sm">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <div className="mt-1 relative rounded-md shadow-sm ">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none font-bold">
           <span className="text-gray-500 sm:text-sm">{icon}</span>
         </div>
-        <input
+        <input style={{width:200}}
           type={type}
           name={name}
           id={id}

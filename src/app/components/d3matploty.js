@@ -40,8 +40,9 @@ const LineGraph = ({ data, xLabel, yLabel, lineColor, legend }) => {
       .call(d3.axisBottom(x).ticks(5).tickSizeOuter(0))
       .selectAll('text')
       .style('text-anchor', 'end')
-      .attr('transform', 'rotate(0)')
-      .style('font-size', '18px');  // Increase font size here
+      .attr('transform', 'rotate(0)')      
+      .style('font-size', '18px');
+        // Increase font size here
 
     // Create the y-axis
     g.append('g')
@@ -54,6 +55,7 @@ const LineGraph = ({ data, xLabel, yLabel, lineColor, legend }) => {
       .attr('transform', `translate(${width / 2},${height + margin.top + 10})`)
       .style('text-anchor', 'middle')
       .style('font-size', '18px')
+      .style('fontWeight', 'bold')
       .text(xLabel);
 
     // Add y-axis label
