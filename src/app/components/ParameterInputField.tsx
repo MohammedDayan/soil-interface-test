@@ -15,7 +15,7 @@ interface ParameterInputFieldProps {
 const ParameterInputField: React.FC<ParameterInputFieldProps> = ({ label, id, name, icon, type, required,value, onChange }) => {
   return (
     <div className="mb-4">
-      <label htmlFor={id} style={{fontSize:16}} className="block text-sm font-bold text-white">
+      <label htmlFor={id} style={{fontSize:18,fontFamily:'Helvetica',}} className="block text-sm  text-white">
         {label}
       </label>
       <div className="mt-1 relative rounded-md shadow-sm ">

@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import Layout from '../components/layout';
 import { useRouter } from 'next/navigation';
 
-interface SignupPageProps {
+interface Signup {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Signup: React.FC<SignupPageProps> = ({ setIsLoggedIn }) => {
+const Signup: React.FC<Signup> = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');

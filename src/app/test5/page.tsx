@@ -321,8 +321,8 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
     // }, [loading]);
     const handleDownloadExcel = () => {
         const dataToExport = [
-            ['Normal Displacement (m)', 'Tangential Displacement (m)', 'Normal Stress (Pa)', 'Shear Stress (Pa)'],
-            ...data.map((item, index) => [item.y, item.x, data3[index].x, data3[index].y])
+            ['Normal Displacement (m)', 'Tangential Displacement (m)', 'Normal Stress (Pa)', 'Shear Stress (Pa)', 'Stress Ratio'],
+            ...data.map((item, index) => [item.y, item.x, data3[index].x, data3[index].y, data4[index].y ])
         ];
 
         const workbook = XLSX.utils.book_new();
@@ -345,8 +345,8 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
 
     const handleDownloadCylic = () => {
         const dataToExport = [
-            ['Normal Displacement (m)', 'Tangential Displacement (m)', 'Normal Stress (Pa)', 'Shear Stress (Pa)'],
-            ...data2.map((item, index) => [item.y, item.x, datac3[index].x, datac3[index].y])
+            ['Normal Displacement (m)', 'Tangential Displacement (m)', 'Normal Stress (Pa)', 'Shear Stress (Pa)', 'Stress Ratio'],
+            ...data2.map((item, index) => [item.y, item.x, datac3[index].x, datac3[index].y, datac4[index].y])
         ];
 
         const workbook = XLSX.utils.book_new();
@@ -377,14 +377,15 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
                         <div className=" text-white bg-gradient-to-r from-gray-900 to-gray-800  p-2">
                             {/* Tabs */}
                             <div className="flex">
-                                <button 
-                                    className={`mr-3 px-2 py-2 text-sm focus:outline-none  rounded-md ${activeTab === 'tab1' ? 'bg-blue-700 text-white' : 'bg-gray-200 text-black'
+                            <button
+                                style={{fontWeight:'bold',fontSize:18,fontFamily:'Helvetica', lineHeight:1.2 }}
+                                    className={`mr-3 px-2 py-2 font-bold text-sm focus:outline-none rounded-md  ${activeTab === 'tab3' ? 'bg-blue-700 text-white' : 'bg-gray-200 text-black'
                                         }`}
-                                    onClick={() => handleTabClick('tab1')}
-                                    style={{fontWeight:'bold',fontSize:18,fontFamily:'Helvetica', lineHeight:1.2 }}
+                                    onClick={() => handleTabClick('tab3')}
                                 >
-                                    Model Parameters
+                                    Initial Condition
                                 </button>
+                               
                                 <button
                                 style={{fontWeight:'bold',fontSize:18,fontFamily:'Helvetica',lineHeight:1.2 }}
                                     className={`mr-3 px-2 py-2 font-bold text-sm focus:outline-none rounded-md  ${activeTab === 'tab2' ? 'bg-blue-700 text-white' : 'bg-gray-200 text-black'
@@ -393,13 +394,13 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
                                 >
                                     Loading Inputs
                                 </button>
-                                <button
-                                style={{fontWeight:'bold',fontSize:18,fontFamily:'Helvetica', lineHeight:1.2 }}
-                                    className={`mr-3 px-2 py-2 font-bold text-sm focus:outline-none rounded-md  ${activeTab === 'tab3' ? 'bg-blue-700 text-white' : 'bg-gray-200 text-black'
+                                <button 
+                                    className={`mr-3 px-2 py-2 text-sm focus:outline-none  rounded-md ${activeTab === 'tab1' ? 'bg-blue-700 text-white' : 'bg-gray-200 text-black'
                                         }`}
-                                    onClick={() => handleTabClick('tab3')}
+                                    onClick={() => handleTabClick('tab1')}
+                                    style={{fontWeight:'bold',fontSize:18,fontFamily:'Helvetica', lineHeight:1.2 }}
                                 >
-                                    Initial Condition
+                                    Model Parameters
                                 </button>
 
                                 <div className="flex justify-center" style={{fontWeight:'bold', fontSize:18}}>
@@ -490,7 +491,7 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
                                      
                                         <form ref={form2Ref} id="loadingInputForm" className="text-gray-900"
                                             onSubmit={handleSubmit}>
-                                            <div className="grid grid-cols-2 gap-4">
+                                            <div className="grid flex-col gap-4">
                                                 <ParameterInputField label="Max.Tangential Displacement" id="tangDispMax"
                                                     name="tangDispMax" icon="" type="text"
                                                     onChange={handleChange}
@@ -499,9 +500,7 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
                                                     name="tangDispMin" icon="" type="text"
                                                     onChange={handleChange}
                                                     value={formData.tangDispMin} required />
-                                            </div>
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <ParameterInputField label="Number of Cycle" id="numCycle"
+                                                      <ParameterInputField label="Number of Cycle" id="numCycle"
                                                     name="numCycle" icon="" type="number"
                                                     onChange={handleChange} value={formData.numCycle}
                                                     required />
@@ -510,6 +509,9 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
                                                     onChange={handleChange}
                                                     value={formData.numIncrement} required />
                                             </div>
+                                            {/* <div className="grid grid-cols-2 gap-4">
+                                              
+                                            </div> */}
                                         </form>
                                     </div>
 
@@ -524,21 +526,22 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
                                         
                                         <form ref={form3Ref} id="initialConditionForm" className="text-gray-900"
                                             onSubmit={handleSubmit}>
-                                            <div className="grid grid-cols-2 gap-4">
+                                            <div className="grid flex-col gap-4">
                                                 <ParameterInputField label="Initial Normal Stress (Pa)" id="sigmaN0" name="sigmaN0"
                                                     icon="" type="text" onChange={handleChange}
                                                     value={formData.sigmaN0} required />
-                                                <ParameterInputField label="Initial Void Ratio (e0)"
+                                                <ParameterInputField label="Initial Void Ratio, e0"
                                                     id="initialVoidRatio" name="initialVoidRatio"
                                                     icon="" type="text" onChange={handleChange}
                                                     value={formData.initialVoidRatio} required />
-                                            </div>
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <ParameterInputField label="Normal Stiffness, K (Pa/m)"
+                                                    <ParameterInputField label="Normal Stiffness, K (Pa/m)"
                                                     id="normalStiffness" name="normalStiffness"
                                                     icon="" type="text" onChange={handleChange}
                                                     value={formData.normalStiffness} required />
                                             </div>
+                                            {/* <div className="grid grid-cols-2 gap-4">
+                                                
+                                            </div> */}
                                         </form>
                                     </div>
 
@@ -583,13 +586,13 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
                                             </div>
                                             <div className="">
                                                 {/* Static button */}
-                                                <button style={{ fontSize: 20, marginRight: 10, }}
+                                                <button style={{ fontSize: 20, marginRight: 15, borderRadius:10 }}
                                                     onClick={() => {
                                                         setShowGraph1(true);
                                                         setCurrentGraph(true)
 
                                                     }}
-                                                    className={`l-2 bg-blue-500 text-l hover:bg-blue-700 text-white font-bold py-1 px-2 rounded 1 px-2 rounded focus:outline-none focus:shadow-outline ${showGraph1 ? "bg-blue-700" : "bg-gray-700"}`}
+                                                    className={`l-2 bg-blue-500 text-l hover:bg-blue-700 text-white font-bold py-2 rounded px-2 pl-2 pr-2 rounded focus:outline-none focus:shadow-outline ${showGraph1 ? "bg-blue-700" : "bg-gray-700"}`}
                                                     disabled={showGraph1}
                                                 >
                                                     Monotonic
@@ -604,7 +607,7 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
                                                         setCurrentGraph(false);
 
                                                     }}
-                                                    className={`l-2 bg-blue-500 text-l hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline ${!showGraph1 ? "bg-blue-700" : "bg-gray-700"}`}
+                                                    className={`l-2 bg-blue-500 text-l hover:bg-blue-700 text-white font-bold py-2 rounded 1 px-2 pl-2 pr-2 focus:outline-none focus:shadow-outline ${!showGraph1 ? "bg-blue-700" : "bg-gray-700"}`}
                                                     disabled={!showGraph1}
                                                 >
                                                     Cyclic
@@ -742,7 +745,7 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
                                                                         </div>
                                                                         
                                                                         <div className="flex justify-center mt-4">
-                                                                            <button onClick={handleDownloadExcel} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                                            <button onClick={handleDownloadCylic} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                                                                 Download Data
                                                                             </button>
                                                                         </div>
