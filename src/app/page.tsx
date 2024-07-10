@@ -86,8 +86,8 @@ const IndexPage = () => {
           <p>Some description here...  </p>
           <Image width={500} height={300} src="/images/sheartest.jpg" className="w-24 h-24 mr-4 rounded-full" alt="Illustration" />    
           <p className="mb-2"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non impedit esse alias dicta neque sit facere ipsum iste, quibusdam dolores a repellendus accusantium, beatae cum temporibus similique nulla atque ipsa!</p>
-          <a href="/ShearTest" className="text-blue-600 mt-2 block border border-blue-600 rounded-md px-4 py-2 inline-flex items-center">
-            Get Started
+          <a href="/test5" className="text-blue-600 mt-2 block border border-blue-600 rounded-md px-4 py-2 inline-flex items-center">
+          Interface Shear Testing
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
