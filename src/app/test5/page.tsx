@@ -29,7 +29,7 @@ interface DataPoint {
     y: number;
 }
 
-const ShearTest: React.FC<ShearTest> = ({ Load }) => {
+export default function Page() {
     const [activeTab, setActiveTab] = useState('tab1'); // Default active tab
     const [formData, setFormData] = useState({
         dn0: '12.0d6',
@@ -868,4 +868,4 @@ const ShearTest: React.FC<ShearTest> = ({ Load }) => {
 };
 
 
-export default ShearTest;
+
