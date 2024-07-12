@@ -85,7 +85,7 @@ const ParameterInputField: React.FC<ParameterInputFieldProps> = ({
         className="block text-sm text-white relative group"
       >
         {label}
-        <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block p-2 rounded-full border-2 border-white shadow-lg bg-lightblue-500 text-white text-sm transition-opacity duration-300">
+        <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block p-2 rounded-md border-2 border-white shadow-lg bg-blue-600 text-white text-sm transition-opacity duration-300">
           {hoverText}
         </div>
       </label>
