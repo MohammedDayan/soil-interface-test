@@ -1,0 +1,15 @@
+
+@font-face {
+    font-family: 'SF Pro Text';
+    src: url('/public/fonts/sf-pro-display/SFPRODISPLAYBOLD.OTF') format('opentype');
+    font-weight: 700;
+    font-style: bold;
+  } 
+  
+  @font-face {
+    font-family: 'SF Pro Text';
+    src: url('/public/fonts/sf-pro-display/SFPRODISPLAYLIGHTITALIC.OTF') format('opentype');
+    font-weight: 700;
+    font-style: italic;
+  }
+  

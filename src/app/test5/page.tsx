@@ -423,64 +423,70 @@ export default function Page() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
                                             <div className="col-span-1 md:col-span-2 lg:col-span-3">
                                                 <div className="grid grid-cols-2 gap-4">
-                                                    <ParameterInputField label="Dn0 (Pa)" id="dn0" name="dn0" icon=""
+                                                    <ParameterInputField hoverText="Details about param here "label="Dn0 (Pa)" id="dn0" name="dn0" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.dn0} required />
-                                                    <ParameterInputField label="Dt0 (Pa)" id="dt0" name="dt0" icon=""
+                                                    <ParameterInputField hoverText="Details about param here "label="Dt0 (Pa)" id="dt0" name="dt0" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.dt0} required />
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-4">
-                                                    <ParameterInputField label="μc" id="mu" name="mu" icon=""
+                                                    <ParameterInputField hoverText="Details about param here "label="μc" id="mu" name="mu" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.mu} required />
-                                                    <ParameterInputField label="ec0" id="ec0" name="ec0" icon=""
+                                                    <ParameterInputField hoverText="Details about param here "label="ec0" id="ec0" name="ec0" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.ec0} required />
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-4">
-                                                    <ParameterInputField label="lambda" id="lambda" name="lambda"
+                                                    <ParameterInputField hoverText="Details about param here "label="lambda" id="lambda" name="lambda"
                                                         icon="" type="text" onChange={handleChange}
                                                         value={formData.lambda} required />
-                                                    <ParameterInputField label="Kd" id="kd" name="kd" icon=""
-                                                        type="text" onChange={handleChange}
-                                                        value={formData.kd} required />
-                                                </div>
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <ParameterInputField label="A0" id="a0" name="a0" icon=""
-                                                        type="text" onChange={handleChange}
-                                                        value={formData.a0} required />
-                                                    <ParameterInputField label="Kf" id="kf" name="kf" icon=""
+                                                     <ParameterInputField hoverText="Details about param here "label="Kf" id="kf" name="kf" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.kf} required />
                                                 </div>
+                                                
+                                                <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
+                        <legend className="text-lg font-semibold text-white"> Dilatency Params</legend>
+
+                                                    <ParameterInputField hoverText="Details about param here "label="A0" id="a0" name="a0" icon=""
+                                                        type="text" onChange={handleChange}
+                                                        value={formData.a0} required />
+                                                    <ParameterInputField hoverText="Details about param here "label="Kd" id="kd" name="kd" icon=""
+                                                        type="text" onChange={handleChange}
+                                                        value={formData.kd} required />
+                                                        </fieldset>
+                                                   
+                                                
                                             </div>
                                             <div className="col-span-1 md:col-span-2 lg:col-span-3">
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <ParameterInputField label="Kp0" id="kp0" name="kp0" icon=""
+                                           
+
+                                                
+                                                <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
+                                                <legend className="text-lg font-semibold text-white">Hardening Params</legend>
+                                                    <ParameterInputField hoverText="Details about param here "label="Kp0" id="kp0" name="kp0" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.kp0} required />
-                                                    <ParameterInputField label="m" id="m" name="m" icon="" type="text"
+                                                    <ParameterInputField hoverText="Details about param here "label="m" id="m" name="m" icon="" type="text"
                                                         onChange={handleChange} value={formData.m}
                                                         required />
-                                                </div>
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <ParameterInputField label="br1 (Pa)" id="br1" name="br1" icon=""
+                                                </fieldset>
+                                                
+                                                
+                                                <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
+                                                <legend className="text-lg font-semibold text-white">Particle breakage Params</legend>
+                                                    <ParameterInputField hoverText="Details about param here " label="br1 (Pa)" id="br1" name="br1" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.br1} required />
-                                                    <ParameterInputField label="br2" id="br2" name="br2" icon=""
+                                                    <ParameterInputField hoverText="Details about param here "label="br2" id="br2" name="br2" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.br2} required />
-                                                </div>
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <ParameterInputField label="P atmosphere (Pa)" id="patm" name="patm"
-                                                        icon="" type="text" onChange={handleChange}
-                                                        value={formData.patm} required />
-                                                    <ParameterInputField label="Interface Thickness (m)" id="thickness"
-                                                        name="thickness" icon="" type="text"
-                                                        onChange={handleChange}
-                                                        value={formData.thickness} required />
-                                                </div>
+                                                </fieldset>
+
+                                                
+                                               
                                             </div>
                                         </div>
                                     </form>
@@ -492,19 +498,19 @@ export default function Page() {
                                         <form ref={form2Ref} id="loadingInputForm" className="text-gray-900"
                                             onSubmit={handleSubmit}>
                                             <div className="grid flex-col gap-4">
-                                                <ParameterInputField label="Max.Tangential Displacement" id="tangDispMax"
+                                                <ParameterInputField hoverText="Details about param here "label="Max.Tangential Displacement" id="tangDispMax"
                                                     name="tangDispMax" icon="" type="text"
                                                     onChange={handleChange}
                                                     value={formData.tangDispMax} required />
-                                                <ParameterInputField label="Min.Tangential Displacement" id="tangDispMin"
+                                                <ParameterInputField hoverText="Details about param here "label="Min.Tangential Displacement" id="tangDispMin"
                                                     name="tangDispMin" icon="" type="text"
                                                     onChange={handleChange}
                                                     value={formData.tangDispMin} required />
-                                                      <ParameterInputField label="Number of Cycle" id="numCycle"
+                                                      <ParameterInputField hoverText="Details about param here "label="Number of Cycle" id="numCycle"
                                                     name="numCycle" icon="" type="number"
                                                     onChange={handleChange} value={formData.numCycle}
                                                     required />
-                                                <ParameterInputField label="Number of Increment" id="numIncrement"
+                                                <ParameterInputField hoverText="Details about param here "label="Number of Increment" id="numIncrement"
                                                     name="numIncrement" icon="" type="number"
                                                     onChange={handleChange}
                                                     value={formData.numIncrement} required />
@@ -527,17 +533,22 @@ export default function Page() {
                                         <form ref={form3Ref} id="initialConditionForm" className="text-gray-900"
                                             onSubmit={handleSubmit}>
                                             <div className="grid flex-col gap-4">
-                                                <ParameterInputField label="Initial Normal Stress (Pa)" id="sigmaN0" name="sigmaN0"
+                                                <ParameterInputField hoverText="Details about param here "label="Initial Normal Stress (Pa)" id="sigmaN0" name="sigmaN0"
                                                     icon="" type="text" onChange={handleChange}
                                                     value={formData.sigmaN0} required />
-                                                <ParameterInputField label="Initial Void Ratio, e0"
+                                                <ParameterInputField hoverText="Details about param here "label="Initial Void Ratio, e0"
                                                     id="initialVoidRatio" name="initialVoidRatio"
                                                     icon="" type="text" onChange={handleChange}
                                                     value={formData.initialVoidRatio} required />
-                                                    <ParameterInputField label="Normal Stiffness, K (Pa/m)"
+                                                    <ParameterInputField hoverText="Details about param here "label="Normal Stiffness, K (Pa/m)"
                                                     id="normalStiffness" name="normalStiffness"
                                                     icon="" type="text" onChange={handleChange}
                                                     value={formData.normalStiffness} required />
+
+                                                    <ParameterInputField hoverText="Details about param here "label="Interface Thickness (m)" id="thickness"
+                                                        name="thickness" icon="" type="text"
+                                                        onChange={handleChange}
+                                                        value={formData.thickness} required />
                                             </div>
                                             {/* <div className="grid grid-cols-2 gap-4">
                                                 
