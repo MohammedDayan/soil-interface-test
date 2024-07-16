@@ -16,8 +16,14 @@ const AnimatedPicture = () => {
         <Image
           src="/graph1.png" // Path to your image inside the public directory
           alt="Graph Illustration"
-          width={500} // Set width of the image
-          height={300} // Set height of the image
+          width={600} // Set width of the image
+          height={500} // Set height of the image
+        />
+        <Image
+          src="/iniparams.png" // Path to your image inside the public directory
+          alt="Graph Illustration"
+          width={600} // Set width of the image
+          height={500} // Set height of the image
         />
       </div>
     </div>

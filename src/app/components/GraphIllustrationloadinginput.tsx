@@ -14,13 +14,25 @@ const AnimatedPicture = () => {
     <div className={`flex justify-center items-center h-screen transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <div className="transition-opacity duration-1000 opacity-100">
         <Image
+        
           src="/graph2.png" // Path to your image inside the public directory
           alt="Graph Illustration"
           width={500} // Set width of the image
-          height={300} // Set height of the image
+          height={500} // Set height of the image
         />
+        </div  >
+        <div   style={{float:"right"}}>
+        <Image
+         
+         src="/modelparamsh.png" // Path to your image inside the public directory
+         alt="Graph Illustration"
+         width={300} // Set width of the image
+         height={300} // Set height of the image
+       />
+        </div>
+         
       </div>
-    </div>
+    
   );
 };
 

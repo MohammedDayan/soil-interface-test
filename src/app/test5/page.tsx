@@ -448,7 +448,7 @@ export default function Page() {
                                                 </div>
                                                 
                                                 <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
-                        <legend className="text-lg font-semibold text-white"> Dilatency Params</legend>
+                        <legend className="text-lg font-semibold text-white"> Dilatency Parameters</legend>
 
                                                     <ParameterInputField hoverText="Details about param here "label="A0" id="a0" name="a0" icon=""
                                                         type="text" onChange={handleChange}
@@ -465,7 +465,7 @@ export default function Page() {
 
                                                 
                                                 <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
-                                                <legend className="text-lg font-semibold text-white">Hardening Params</legend>
+                                                <legend className="text-lg font-semibold text-white">Hardening Parameters</legend>
                                                     <ParameterInputField hoverText="Details about param here "label="Kp0" id="kp0" name="kp0" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.kp0} required />
@@ -476,7 +476,7 @@ export default function Page() {
                                                 
                                                 
                                                 <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
-                                                <legend className="text-lg font-semibold text-white">Particle breakage Params</legend>
+                                                <legend className="text-lg font-semibold text-white">Particle breakage Parameters</legend>
                                                     <ParameterInputField hoverText="Details about param here " label="br1 (Pa)" id="br1" name="br1" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.br1} required />
@@ -831,9 +831,9 @@ export default function Page() {
                                                     {activeTab === 'tab1' &&
                                                         <div>
 
-
-                                                            <GraphIllustration />
-
+                                                        {/* model params */}
+                                                           
+                                    <GraphIllustrationloadinginput></GraphIllustrationloadinginput>
 
                                                         </div>
                                                     }
@@ -845,7 +845,8 @@ export default function Page() {
                                                     {activeTab === 'tab2' &&
                                                         <div
                                                         >
-                                                            <GraphIllustrationloadinginput></GraphIllustrationloadinginput>
+                                                            {/* loading */}
+                                                             <GraphIllustrationinitialinput></GraphIllustrationinitialinput>
                                                         </div>
                                                     }
 
@@ -855,7 +856,8 @@ export default function Page() {
                                                     {activeTab === 'tab3' &&
                                                         <div
                                                         >
-                                                            <GraphIllustrationinitialinput></GraphIllustrationinitialinput>
+                                                            {/* initial condition */}
+                                                               <GraphIllustration />
                                                         </div>
                                                     }
 

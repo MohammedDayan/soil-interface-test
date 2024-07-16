@@ -48,7 +48,7 @@ const IndexPage = () => {
       
      <Layout>
 
-     <div  className="bg-cover bg-center h-100" style={{ backgroundImage: "url('/images/header-image.jpg')" , height:"100vh", }}>
+     <div  className="bg-cover bg-center h-100" style={{ backgroundImage: "url('/background.png')" , height:"100vh", }}>
      <div className="flex items-center justify-center h-24 lg:my-0 my-16 md:my-5">
           <div className={`transition-all duration-300 ${isContentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
 

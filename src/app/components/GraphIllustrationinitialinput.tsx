@@ -12,14 +12,49 @@ const AnimatedPicture = () => {
 
   return (
     <div className={`flex justify-center items-center h-screen transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <div className="transition-opacity duration-1000 opacity-100">
-        <Image
-          src="/graph3.png" // Path to your image inside the public directory
-          alt="Graph Illustration"
-          width={500} // Set width of the image
-          height={300} // Set height of the image
-        />
+
+      
+        <div className="transition-opacity duration-1000 opacity-100">
+          <Image
+            src="/graph3.png" // Path to your image inside the public directory
+            alt="Graph Illustration"
+            width={600} // Set width of the image
+            height={500} // Set height of the image
+          />
+        </div>
+
+        <div style={{float:"right"}}>
+          <Image
+            src="/loading1.png" // Path to your image inside the public directory
+            alt="Graph Illustration"
+            width={200} // Set width of the image
+            height={200} // Set height of the image
+          />
+          <Image
+            src="/loading2.png" // Path to your image inside the public directory
+            alt="Graph Illustration"
+            width={200} // Set width of the image
+            height={200} // Set height of the image
+          /> <Image
+            src="/loading3.png" // Path to your image inside the public directory
+            alt="Graph Illustration"
+            width={200} // Set width of the image
+            height={200} // Set height of the image
+          /> <Image
+            src="/loading4.png" // Path to your image inside the public directory
+            alt="Graph Illustration"
+            width={200} // Set width of the image
+            height={200} // Set height of the image
+          /> <Image
+            src="/loading5.png" // Path to your image inside the public directory
+            alt="Graph Illustration"
+            width={200} // Set width of the image
+            height={200} // Set height of the image
+          />
+
+       
       </div>
+
     </div>
   );
 };

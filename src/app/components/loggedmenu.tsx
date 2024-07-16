@@ -34,7 +34,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gradient-to-r from-gray-900 to-gray-800 text-white p-2">
+    <header className="bg-gradient-to-r from-gray-900 to-gray-800 text-white p-2 py-5">
       <div className="container mx-auto">
         <nav className="flex justify-between items-center">
           <div className="h-5 ">
@@ -42,6 +42,8 @@ const Header = () => {
               <Logo  width={20} height={20}/>
             </a>
           </div>
+
+          <h1 className="text-xl font-bold text-center">Shear Test Calculation & Simulation Playground</h1>
           <div>
             <ul className="flex space-x-4">
               <li><a href="/" className="hover:text-gray-300">Home</a></li>              
