@@ -39,7 +39,7 @@ const Header = () => {
         <nav className="flex justify-between items-center">
           <div className="h-5 ">
             <a href="#" className="text-lg font-bold">
-              <Logo  width={20} height={20}/>
+              <Logo  width={120} height={100}/>
             </a>
           </div>
 

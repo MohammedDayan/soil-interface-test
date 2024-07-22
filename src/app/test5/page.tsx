@@ -30,7 +30,7 @@ interface DataPoint {
 }
 
 export default function Page() {
-    const [activeTab, setActiveTab] = useState('tab1'); // Default active tab
+    const [activeTab, setActiveTab] = useState('tab3'); // Default active tab
     const [formData, setFormData] = useState({
         dn0: '12.0d6',
         dt0: '10.0d6',
@@ -322,7 +322,7 @@ export default function Page() {
     const handleDownloadExcel = () => {
         const dataToExport = [
             ['Normal Displacement (m)', 'Tangential Displacement (m)', 'Normal Stress (Pa)', 'Shear Stress (Pa)', 'Stress Ratio'],
-            ...data.map((item, index) => [item.y, item.x, data3[index].x, data3[index].y, data4[index].y ])
+            ...data.map((item, index) => [item.y, item.x, data3[index].x, data3[index].y, data4[index].y])
         ];
 
         const workbook = XLSX.utils.book_new();
@@ -377,33 +377,33 @@ export default function Page() {
                         <div className=" text-white bg-gradient-to-r from-gray-900 to-gray-800  p-2">
                             {/* Tabs */}
                             <div className="flex">
-                            <button
-                                style={{fontWeight:'bold',fontSize:18,fontFamily:'Helvetica', lineHeight:1.2 }}
+                                <button
+                                    style={{ fontWeight: 'bold', fontSize: 18, fontFamily: 'Helvetica', lineHeight: 1.2 }}
                                     className={`mr-3 px-2 py-2 font-bold text-sm focus:outline-none rounded-md  ${activeTab === 'tab3' ? 'bg-blue-700 text-white' : 'bg-gray-200 text-black'
                                         }`}
                                     onClick={() => handleTabClick('tab3')}
                                 >
                                     Initial Condition
                                 </button>
-                               
+
                                 <button
-                                style={{fontWeight:'bold',fontSize:18,fontFamily:'Helvetica',lineHeight:1.2 }}
+                                    style={{ fontWeight: 'bold', fontSize: 18, fontFamily: 'Helvetica', lineHeight: 1.2 }}
                                     className={`mr-3 px-2 py-2 font-bold text-sm focus:outline-none rounded-md  ${activeTab === 'tab2' ? 'bg-blue-700 text-white' : 'bg-gray-200 text-black'
                                         }`}
                                     onClick={() => handleTabClick('tab2')}
                                 >
                                     Loading Inputs
                                 </button>
-                                <button 
+                                <button
                                     className={`mr-3 px-2 py-2 text-sm focus:outline-none  rounded-md ${activeTab === 'tab1' ? 'bg-blue-700 text-white' : 'bg-gray-200 text-black'
                                         }`}
                                     onClick={() => handleTabClick('tab1')}
-                                    style={{fontWeight:'bold',fontSize:18,fontFamily:'Helvetica', lineHeight:1.2 }}
+                                    style={{ fontWeight: 'bold', fontSize: 18, fontFamily: 'Helvetica', lineHeight: 1.2 }}
                                 >
                                     Model Parameters
                                 </button>
 
-                                <div className="flex justify-center" style={{fontWeight:'bold', fontSize:18}}>
+                                <div className="flex justify-center" style={{ fontWeight: 'bold', fontSize: 18 }}>
                                     <button type="submit" className="bg-red-600 text-white px-4 py-2 rounded-md"
                                         disabled={loading} onClick={handleButtonClick}>
                                         {loading ? 'Loading...' : 'Analyze'}
@@ -413,80 +413,99 @@ export default function Page() {
                             </div>
                         </div>
                         {/* Tab Content */}
-                        <div className='ml-3' style={{paddingTop:20}  }>
+                        <div className='ml-3' style={{ paddingTop: 20 }}>
 
                             {activeTab === 'tab1' &&
                                 <div>
-                                   
+
                                     <form ref={form1Ref} id="modelParametersForm" className="text-gray-900"
                                         onSubmit={handleSubmit}>
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
                                             <div className="col-span-1 md:col-span-2 lg:col-span-3">
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <ParameterInputField hoverText="Details about param here "label="Dn0 (Pa)" id="dn0" name="dn0" icon=""
+
+                                                <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
+                                                    <legend className="text-lg font-semibold text-white">elasticity params
+                                                    </legend>
+                                                    <ParameterInputField hoverText="Details about param here " label="Dn0 (Pa)" id="dn0" name="dn0" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.dn0} required />
-                                                    <ParameterInputField hoverText="Details about param here "label="Dt0 (Pa)" id="dt0" name="dt0" icon=""
+                                                    <ParameterInputField hoverText="Details about param here " label="Dt0 (Pa)" id="dt0" name="dt0" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.dt0} required />
-                                                </div>
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <ParameterInputField hoverText="Details about param here "label="μc" id="mu" name="mu" icon=""
+                                                </fieldset>
+
+
+                                                <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
+                                                    <legend className="text-lg font-semibold text-white">bonding surface parameter
+                                                    </legend>
+                                                    <ParameterInputField hoverText="Details about param here " label="μc" id="mu" name="mu" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.mu} required />
-                                                    <ParameterInputField hoverText="Details about param here "label="ec0" id="ec0" name="ec0" icon=""
+                                                    <ParameterInputField hoverText="Details about param here " label="ec0" id="ec0" name="ec0" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.ec0} required />
-                                                </div>
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <ParameterInputField hoverText="Details about param here "label="lambda" id="lambda" name="lambda"
+
+                                                    <ParameterInputField hoverText="Details about param here " label="lambda" id="lambda" name="lambda"
                                                         icon="" type="text" onChange={handleChange}
                                                         value={formData.lambda} required />
-                                                     <ParameterInputField hoverText="Details about param here "label="Kf" id="kf" name="kf" icon=""
+
+                                                </fieldset>
+                                                <div className="grid grid-cols-2 gap-4">
+
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-4">
+
+
+                                                </div>
+                                                <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
+                                                    <legend className="text-lg font-semibold text-white">bonding surface parameter
+                                                    </legend>
+
+                                                    <ParameterInputField hoverText="Details about param here " label="Kf" id="kf" name="kf" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.kf} required />
-                                                </div>
-                                                
-                                                <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
-                        <legend className="text-lg font-semibold text-white"> Dilatency Parameters</legend>
+                                                </fieldset>
 
-                                                    <ParameterInputField hoverText="Details about param here "label="A0" id="a0" name="a0" icon=""
+                                                <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
+                                                    <legend className="text-lg font-semibold text-white"> Dilatancy Parameters</legend>
+
+                                                    <ParameterInputField hoverText="Details about parameters here " label="AD" id="a0" name="a0" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.a0} required />
-                                                    <ParameterInputField hoverText="Details about param here "label="Kd" id="kd" name="kd" icon=""
+                                                    <ParameterInputField hoverText="Details about param here " label="Kd" id="kd" name="kd" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.kd} required />
-                                                        </fieldset>
-                                                   
-                                                
+                                                </fieldset>
+
+
                                             </div>
                                             <div className="col-span-1 md:col-span-2 lg:col-span-3">
-                                           
 
-                                                
+
+
                                                 <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
-                                                <legend className="text-lg font-semibold text-white">Hardening Parameters</legend>
-                                                    <ParameterInputField hoverText="Details about param here "label="Kp0" id="kp0" name="kp0" icon=""
+                                                    <legend className="text-lg font-semibold text-white">Hardening Parameters</legend>
+                                                    <ParameterInputField hoverText="Details about param here " label="Kp0" id="kp0" name="kp0" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.kp0} required />
-                                                    <ParameterInputField hoverText="Details about param here "label="m" id="m" name="m" icon="" type="text"
+                                                    <ParameterInputField hoverText="Details about param here " label="m" id="m" name="m" icon="" type="text"
                                                         onChange={handleChange} value={formData.m}
                                                         required />
                                                 </fieldset>
-                                                
-                                                
+
+
                                                 <fieldset className="grid grid-cols-2 gap-4 border border-gray-300 p-4 rounded-md">
-                                                <legend className="text-lg font-semibold text-white">Particle breakage Parameters</legend>
+                                                    <legend className="text-lg font-semibold text-white">Particle breakage Parameters</legend>
                                                     <ParameterInputField hoverText="Details about param here " label="br1 (Pa)" id="br1" name="br1" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.br1} required />
-                                                    <ParameterInputField hoverText="Details about param here "label="br2" id="br2" name="br2" icon=""
+                                                    <ParameterInputField hoverText="Details about param here " label="br2" id="br2" name="br2" icon=""
                                                         type="text" onChange={handleChange}
                                                         value={formData.br2} required />
                                                 </fieldset>
 
-                                                
-                                               
+
+
                                             </div>
                                         </div>
                                     </form>
@@ -494,23 +513,23 @@ export default function Page() {
                             <div>
                                 {activeTab === 'tab2' &&
                                     <div>
-                                     
+
                                         <form ref={form2Ref} id="loadingInputForm" className="text-gray-900"
                                             onSubmit={handleSubmit}>
                                             <div className="grid flex-col gap-4">
-                                                <ParameterInputField hoverText="Details about param here "label="Max.Tangential Displacement" id="tangDispMax"
+                                                <ParameterInputField hoverText="Details about param here " label="Max.Tangential Displacement" id="tangDispMax"
                                                     name="tangDispMax" icon="" type="text"
                                                     onChange={handleChange}
                                                     value={formData.tangDispMax} required />
-                                                <ParameterInputField hoverText="Details about param here "label="Min.Tangential Displacement" id="tangDispMin"
+                                                <ParameterInputField hoverText="Details about param here " label="Min.Tangential Displacement" id="tangDispMin"
                                                     name="tangDispMin" icon="" type="text"
                                                     onChange={handleChange}
                                                     value={formData.tangDispMin} required />
-                                                      <ParameterInputField hoverText="Details about param here "label="Number of Cycle" id="numCycle"
+                                                <ParameterInputField hoverText="Details about param here " label="Number of Cycle" id="numCycle"
                                                     name="numCycle" icon="" type="number"
                                                     onChange={handleChange} value={formData.numCycle}
                                                     required />
-                                                <ParameterInputField hoverText="Details about param here "label="Number of Increment" id="numIncrement"
+                                                <ParameterInputField hoverText="Details about param here " label="Number of Increment" id="numIncrement"
                                                     name="numIncrement" icon="" type="number"
                                                     onChange={handleChange}
                                                     value={formData.numIncrement} required />
@@ -529,26 +548,26 @@ export default function Page() {
                             <div>
                                 {activeTab === 'tab3' && (
                                     <div>
-                                        
+
                                         <form ref={form3Ref} id="initialConditionForm" className="text-gray-900"
                                             onSubmit={handleSubmit}>
                                             <div className="grid flex-col gap-4">
-                                                <ParameterInputField hoverText="Details about param here "label="Initial Normal Stress (Pa)" id="sigmaN0" name="sigmaN0"
+                                                <ParameterInputField hoverText="Details about param here " label="Initial Normal Stress (Pa)" id="sigmaN0" name="sigmaN0"
                                                     icon="" type="text" onChange={handleChange}
                                                     value={formData.sigmaN0} required />
-                                                <ParameterInputField hoverText="Details about param here "label="Initial Void Ratio, e0"
+                                                <ParameterInputField hoverText="Details about param here " label="Initial Void Ratio, e0"
                                                     id="initialVoidRatio" name="initialVoidRatio"
                                                     icon="" type="text" onChange={handleChange}
                                                     value={formData.initialVoidRatio} required />
-                                                    <ParameterInputField hoverText="Details about param here "label="Normal Stiffness, K (Pa/m)"
+                                                <ParameterInputField hoverText="Details about param here " label="Normal Stiffness, K (Pa/m)"
                                                     id="normalStiffness" name="normalStiffness"
                                                     icon="" type="text" onChange={handleChange}
                                                     value={formData.normalStiffness} required />
 
-                                                    <ParameterInputField hoverText="Details about param here "label="Interface Thickness (m)" id="thickness"
-                                                        name="thickness" icon="" type="text"
-                                                        onChange={handleChange}
-                                                        value={formData.thickness} required />
+                                                <ParameterInputField hoverText="Details about param here " label="Interface Thickness (m)" id="thickness"
+                                                    name="thickness" icon="" type="text"
+                                                    onChange={handleChange}
+                                                    value={formData.thickness} required />
                                             </div>
                                             {/* <div className="grid grid-cols-2 gap-4">
                                                 
@@ -597,7 +616,7 @@ export default function Page() {
                                             </div>
                                             <div className="">
                                                 {/* Static button */}
-                                                <button style={{ fontSize: 20, marginRight: 15, borderRadius:10 }}
+                                                <button style={{ fontSize: 20, marginRight: 15, borderRadius: 10 }}
                                                     onClick={() => {
                                                         setShowGraph1(true);
                                                         setCurrentGraph(true)
@@ -637,19 +656,19 @@ export default function Page() {
                                                         {loading ? (
                                                             <>
                                                                 <div style={{ display: 'block' }}>
-                                                    <div className="flex justify-center items-center h-screen" style={{
-                                                        position: 'absolute',
-                                                        top: '50%',
-                                                        left: '65%',
-                                                        transform: 'translate(-50%, -50%)',
-                                                        flexDirection: 'column'
-                                                    }}>
-                                                        <BounceLoader size="250" color="#4C49EB" />
-                                                        <div style={{ fontSize: 30, fontWeight: 'bold', marginTop: '20px' }}>
-                                                            Loading....
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                                    <div className="flex justify-center items-center h-screen" style={{
+                                                                        position: 'absolute',
+                                                                        top: '50%',
+                                                                        left: '65%',
+                                                                        transform: 'translate(-50%, -50%)',
+                                                                        flexDirection: 'column'
+                                                                    }}>
+                                                                        <BounceLoader size="250" color="#4C49EB" />
+                                                                        <div style={{ fontSize: 30, fontWeight: 'bold', marginTop: '20px' }}>
+                                                                            Loading....
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </>
                                                         ) :
 
@@ -687,7 +706,7 @@ export default function Page() {
                                                                             </div>
                                                                             <div className="flex justify-center mt-4">
                                                                                 <button onClick={handleDownloadExcel} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                                                                Download Data
+                                                                                    Download Data
                                                                                 </button>
                                                                             </div>
                                                                         </div>
@@ -750,11 +769,11 @@ export default function Page() {
                                                                             </div>
                                                                             <div className="w-1/2 bg-white p-4">
 
-                                                                            <LineGraph data={datac4} yLabel={"Stress Ratio"}
-                                                                                        xLabel={"Tangential Displacement (mm)"} />
+                                                                                <LineGraph data={datac4} yLabel={"Stress Ratio"}
+                                                                                    xLabel={"Tangential Displacement (mm)"} />
                                                                             </div>
                                                                         </div>
-                                                                        
+
                                                                         <div className="flex justify-center mt-4">
                                                                             <button onClick={handleDownloadCylic} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                                                                 Download Data
@@ -831,9 +850,13 @@ export default function Page() {
                                                     {activeTab === 'tab1' &&
                                                         <div>
 
-                                                        {/* model params */}
-                                                           
-                                    <GraphIllustrationloadinginput></GraphIllustrationloadinginput>
+                                                            {/* model params */}
+                                                            <div className='mx-auto  px-4 flex justify-center items-center text-4xl font-bold'>
+
+                                                                <h1>Model Parameter Ranges</h1>
+                                                            </div>
+
+                                                            <GraphIllustrationloadinginput></GraphIllustrationloadinginput>
 
                                                         </div>
                                                     }
@@ -846,7 +869,11 @@ export default function Page() {
                                                         <div
                                                         >
                                                             {/* loading */}
-                                                             <GraphIllustrationinitialinput></GraphIllustrationinitialinput>
+                                                            <div className='mx-auto  px-4 flex justify-center items-center text-4xl font-bold'>
+
+                                                                <h1>Loading Inputs</h1>
+                                                            </div>
+                                                            <GraphIllustrationinitialinput></GraphIllustrationinitialinput>
                                                         </div>
                                                     }
 
@@ -857,7 +884,12 @@ export default function Page() {
                                                         <div
                                                         >
                                                             {/* initial condition */}
-                                                               <GraphIllustration />
+
+                                                            <div className='mx-auto  px-4 flex justify-center items-center text-4xl font-bold'>
+
+                                                                <h1>Initial condition</h1>
+                                                            </div>
+                                                            <GraphIllustration />
                                                         </div>
                                                     }
 

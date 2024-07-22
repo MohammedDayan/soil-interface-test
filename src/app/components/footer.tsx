@@ -3,7 +3,7 @@ import Logo from './logo';
 
 const Footer = () => {
   return (
-<footer className="bg-gray-800 text-white p-4 mt-8">
+<footer className="bg-[#032571] text-white p-4 mt-8">
 <nav className="flex justify-between items-center">
   <div>
     <a href="#" className="text-lg font-bold">
